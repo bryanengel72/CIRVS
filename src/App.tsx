@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import {
   Wrench, Zap, Droplet, ThermometerSnowflake, Home,
   Sofa, Maximize2, Activity, CircleDashed, ShieldCheck,
@@ -128,10 +128,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isActive, onC
 
           <ul className="space-y-2 mt-auto">
             {service.items.map((item, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: (index * 0.1) + (i * 0.1) + 0.3 }}
+                className="flex items-start gap-2 text-sm text-slate-600"
+              >
                 <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5 opacity-70" />
                 <span>{item}</span>
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
@@ -140,18 +147,69 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isActive, onC
   );
 };
 
-const BackgroundOrbs = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-    <div className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-sky-600/20 rounded-full blur-[120px] mix-blend-screen animate-float"></div>
-    <div className="absolute top-1/3 -right-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[150px] mix-blend-screen animate-float-delayed"></div>
-    <div className="absolute bottom-[-10%] left-1/3 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px] mix-blend-screen animate-float"></div>
-  </div>
-);
+// Premium Magnetic CTA Button
+const MagneticButton = ({ children, onClick, className }: { children: React.ReactNode, onClick: () => void, className?: string }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Max distance to pull is 15px
+    const distanceX = e.clientX - centerX;
+    const distanceY = e.clientY - centerY;
+
+    x.set(distanceX * 0.2);
+    y.set(distanceY * 0.2);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.button
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: mouseXSpring, y: mouseYSpring }}
+      className={className}
+    >
+      {children}
+    </motion.button>
+  );
+};
+
+const BackgroundOrbs = ({ parallax = false }: { parallax?: boolean }) => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, parallax ? -150 : 0]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, parallax ? -250 : 0]);
+  const y3 = useTransform(scrollY, [0, 1000], [0, parallax ? -100 : 0]);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <motion.div style={{ y: y1 }} className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-sky-600/20 rounded-full blur-[120px] mix-blend-screen animate-float"></motion.div>
+      <motion.div style={{ y: y2 }} className="absolute top-1/3 -right-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[150px] mix-blend-screen animate-float-delayed"></motion.div>
+      <motion.div style={{ y: y3 }} className="absolute bottom-[-10%] left-1/3 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px] mix-blend-screen animate-float"></motion.div>
+    </div>
+  );
+};
+
 
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
+
+  // Parallax Scroll Value for Hero section
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 1000], [0, 200]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -188,7 +246,10 @@ export default function App() {
   }, [isMobileMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-[#1b3144] text-slate-200 selection:bg-sky-500/30 selection:text-sky-200">
+    <div className="min-h-screen bg-[#1b3144] text-slate-200 selection:bg-sky-500/30 selection:text-sky-200 relative overflow-hidden">
+
+      {/* Global Background Elements */}
+      <BackgroundOrbs parallax={true} />
 
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-[#1b3144]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50' : 'py-5 bg-transparent'}`}>
@@ -311,6 +372,7 @@ export default function App() {
 
             {/* Center the hero content since the right side is removed */}
             <motion.div
+              style={{ y: heroY }}
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -336,17 +398,35 @@ export default function App() {
                   hidden: { opacity: 0 },
                   visible: {
                     opacity: 1,
-                    transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+                    transition: { staggerChildren: 0.2, delayChildren: 0.3 }
                   }
                 }}
                 className="text-6xl md:text-8xl font-black font-display text-white tracking-tight mb-6 leading-[1.1] drop-shadow-2xl"
               >
-                <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>More</motion.span>{" "}
-                <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Miles,</motion.span><br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
-                  <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Less</motion.span>{" "}
-                  <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Worries.</motion.span>
-                </span>
+                {[
+                  { text: 'More', gradient: false },
+                  { text: 'Miles,', gradient: false, br: true },
+                  { text: 'Less', gradient: true },
+                  { text: 'Worries.', gradient: true }
+                ].map((word, i) => (
+                  <React.Fragment key={i}>
+                    <motion.span
+                      className={`inline-block mr-4 ${word.gradient ? 'text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]' : ''}`}
+                      variants={{
+                        hidden: { opacity: 0, y: 30, scale: 0.9 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                          transition: { type: "spring", bounce: 0.5, duration: 0.8 }
+                        }
+                      }}
+                    >
+                      {word.text}
+                    </motion.span>
+                    {word.br && <br />}
+                  </React.Fragment>
+                ))}
               </motion.h1>
 
               <p className="text-xl text-slate-100 mb-10 max-w-xl leading-relaxed font-medium mx-auto drop-shadow-lg">
@@ -354,18 +434,12 @@ export default function App() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-5 justify-center w-full">
-                <button
+                <MagneticButton
                   onClick={() => scrollTo('contact')}
-                  className="bg-white text-slate-900 hover:bg-sky-50 px-8 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center gap-3 focus:ring-4 focus:ring-sky-500/50"
+                  className="bg-sky-500 text-white hover:bg-sky-400 px-8 py-4 rounded-full font-bold text-lg transition-colors flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(14,165,233,0.3)] hover:shadow-[0_0_40px_rgba(14,165,233,0.5)] focus:ring-4 focus:ring-sky-500/50"
                 >
-                  Schedule Service
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.div>
-                </button>
+                  <Phone className="w-5 h-5" /> Schedule Service
+                </MagneticButton>
               </div>
 
               <div className="mt-12 flex items-center gap-4 text-sm text-slate-100 font-medium justify-center drop-shadow-md">
@@ -385,7 +459,13 @@ export default function App() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 relative bg-white">
+      <section id="services" className="py-32 relative bg-white overflow-hidden">
+        {/* Add subtle background orbs for services section */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-40">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-sky-100/50 rounded-full blur-[120px] animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50/50 rounded-full blur-[100px] animate-float-delayed"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
           <div className="text-center max-w-3xl mx-auto mb-20">
@@ -490,15 +570,19 @@ export default function App() {
 
                 {/* Certification Logos */}
                 <div className="flex items-center gap-8 mt-2">
-                  <img
+                  <motion.img
+                    animate={{ y: [0, -5, 0], scale: [1, 1.02, 1] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     src={getImageUrl('cirvs-cert.png')}
                     alt="CIRVS Certification"
-                    className="h-24 md:h-32 w-auto object-contain"
+                    className="h-24 md:h-32 w-auto object-contain drop-shadow-[0_0_15px_rgba(56,189,248,0.2)]"
                   />
-                  <img
+                  <motion.img
+                    animate={{ y: [0, 5, 0], scale: [1, 1.02, 1], rotate: [-1, 1, -1] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                     src={getImageUrl('RVTAA-Logo_White.png')}
                     alt="RVTAA Logo"
-                    className="h-20 md:h-24 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity drop-shadow-2xl"
+                    className="h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                   />
                 </div>
               </div>
@@ -621,13 +705,9 @@ export default function App() {
           </div>
 
           <p className="text-slate-500 text-sm font-medium">
-            &copy; {new Date().getFullYear()} Certified Integrity RV Service LLC. All rights reserved.
+            &copy; {new Date().getFullYear()} Certified Integrity RV Services LLC. All rights reserved.
           </p>
 
-          <div className="flex gap-8">
-            <a href="#" className="text-slate-500 hover:text-sky-400 transition-colors text-sm font-medium uppercase tracking-wider">Privacy</a>
-            <a href="#" className="text-slate-500 hover:text-sky-400 transition-colors text-sm font-medium uppercase tracking-wider">Terms</a>
-          </div>
         </div>
       </footer>
     </div>
