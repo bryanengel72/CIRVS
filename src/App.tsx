@@ -85,9 +85,9 @@ const ServiceCard: React.FC<{ service: typeof services[0], index: number }> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="glass-card rounded-2xl p-6 group relative overflow-hidden h-full flex flex-col"
+      className="bg-white border border-slate-100 shadow-xl rounded-2xl p-6 group relative overflow-hidden h-full flex flex-col hover:shadow-2xl transition-all"
     >
-      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110">
+      <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-110">
         <Icon className="w-24 h-24 text-sky-400" />
       </div>
 
@@ -96,12 +96,12 @@ const ServiceCard: React.FC<{ service: typeof services[0], index: number }> = ({
           <Icon className="w-7 h-7" />
         </div>
 
-        <h3 className="text-xl font-bold text-white mb-2 font-display">{service.title}</h3>
-        <p className="text-slate-400 mb-6 text-sm">{service.description}</p>
+        <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">{service.title}</h3>
+        <p className="text-slate-600 mb-6 text-sm">{service.description}</p>
 
         <ul className="space-y-2 mt-auto">
           {service.items.map((item, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+            <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
               <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5 opacity-70" />
               <span>{item}</span>
             </li>
@@ -276,7 +276,7 @@ export default function App() {
             alt="RV on the road"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-slate-950/40 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-transparent"></div>
         </div>
 
@@ -346,7 +346,7 @@ export default function App() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 relative">
+      <section id="services" className="py-32 relative bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
           <div className="text-center max-w-3xl mx-auto mb-20">
@@ -356,12 +356,12 @@ export default function App() {
               viewport={{ once: true }}
               className="inline-block mb-4"
             >
-              <span className="bg-sky-500/10 text-sky-400 font-semibold px-4 py-2 rounded-full border border-sky-500/20 text-sm tracking-widest uppercase">Expertise</span>
+              <span className="bg-sky-500/10 text-sky-600 font-semibold px-4 py-2 rounded-full border border-sky-500/20 text-sm tracking-widest uppercase">Expertise</span>
             </motion.div>
-            <h2 className="text-4xl md:text-5xl font-black font-display text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-black font-display text-slate-900 mb-6">
               Comprehensive RV Solutions
             </h2>
-            <p className="text-xl text-slate-400 font-light">
+            <p className="text-xl text-slate-600 font-medium">
               From mechanical repairs to luxury upgrades, we handle every aspect of your RV's maintenance with precision.
             </p>
           </div>
