@@ -7,6 +7,8 @@ import {
   ArrowRight, CheckCircle2, MapPin, Star, Settings
 } from 'lucide-react';
 
+import { getImageUrl } from './lib/supabase';
+
 const services = [
   {
     title: "Electrical Systems",
@@ -272,7 +274,7 @@ export default function App() {
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-80 mix-blend-luminosity">
           <img
-            src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop"
+            src={getImageUrl('hero-bg.jpg')}
             alt="RV on the road"
             className="w-full h-full object-cover"
           />
@@ -303,12 +305,25 @@ export default function App() {
                 Premier Mobile RV Repair in Florida
               </motion.div>
 
-              <h1 className="text-6xl md:text-8xl font-black font-display text-white tracking-tight mb-6 leading-[1.1] drop-shadow-2xl">
-                More Miles,<br />
+              <motion.h1
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+                  }
+                }}
+                className="text-6xl md:text-8xl font-black font-display text-white tracking-tight mb-6 leading-[1.1] drop-shadow-2xl"
+              >
+                <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>More</motion.span>{" "}
+                <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Miles,</motion.span><br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
-                  Less Worries.
+                  <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Less</motion.span>{" "}
+                  <motion.span className="inline-block" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>Worries.</motion.span>
                 </span>
-              </h1>
+              </motion.h1>
 
               <p className="text-xl text-slate-100 mb-10 max-w-xl leading-relaxed font-medium mx-auto drop-shadow-lg">
                 Professional, certified, and fully mobile RV repair services brought directly to your location. We fix it right, so you can explore further.
@@ -388,7 +403,7 @@ export default function App() {
             >
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-white/10 shadow-2xl p-2 z-10">
                 <img
-                  src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=2069&auto=format&fit=crop"
+                  src={getImageUrl('david-griffin.jpg')}
                   alt="David Griffin, RV Technician"
                   className="w-full h-full object-cover rounded-2xl filter grayscale-[20%] contrast-125"
                 />
