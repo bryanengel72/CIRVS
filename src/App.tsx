@@ -1,367 +1,443 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Wrench, Zap, Droplet, ThermometerSnowflake, Home, 
-  Sofa, Maximize2, Activity, CircleDashed, ShieldCheck, 
-  CalendarCheck, Trash2, Phone, Mail, Menu, X, ChevronDown, 
-  ArrowRight, CheckCircle2, MapPin
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Wrench, Zap, Droplet, ThermometerSnowflake, Home,
+  Sofa, Maximize2, Activity, CircleDashed, ShieldCheck,
+  CalendarCheck, Trash2, Phone, Mail, Menu, X, ChevronDown,
+  ArrowRight, CheckCircle2, MapPin, Star, Settings
 } from 'lucide-react';
 
 const services = [
   {
-    title: "Electrical System Repairs",
+    title: "Electrical Systems",
     icon: Zap,
-    items: [
-      "Battery replacement and charging systems",
-      "Wiring repairs and upgrades",
-      "Troubleshooting electrical issues",
-      "Solar panel installation and maintenance"
-    ]
+    description: "Complete electrical diagnostics, repairs, and solar upgrades.",
+    items: ["Battery & charging systems", "Wiring upgrades", "Solar panel installation"]
   },
   {
-    title: "Plumbing and Water System Repairs",
+    title: "Plumbing & Water",
     icon: Droplet,
-    items: [
-      "Freshwater system inspection and repair",
-      "Wastewater and sewage system repairs",
-      "Water heater repair or replacement",
-      "Leak detection and sealing"
-    ]
+    description: "Freshwater, wastewater, and heating solutions.",
+    items: ["Freshwater repair", "Sewage system fixing", "Water heater installation"]
   },
   {
-    title: "HVAC System Repairs",
+    title: "Climate Control",
     icon: ThermometerSnowflake,
-    items: [
-      "Air conditioning unit repair and replacement",
-      "Furnace and heating system services",
-      "Ventilation system cleaning and repair"
-    ]
+    description: "HVAC, furnace, and ventilation services.",
+    items: ["A/C unit repair", "Furnace servicing", "Ventilation cleaning"]
   },
   {
-    title: "Exterior Repairs",
+    title: "Exterior Maintenance",
     icon: Home,
-    items: [
-      "Roof inspection and resealing",
-      "Awning repair or replacement",
-      "Window and door repair or replacement",
-      "Exterior lighting upgrades and repairs"
-    ]
+    description: "Roofing, sealing, and structural exterior care.",
+    items: ["Roof sealing", "Awning repair", "External lighting"]
   },
   {
-    title: "Interior Repairs",
+    title: "Interior Refinement",
     icon: Sofa,
-    items: [
-      "Cabinetry and furniture repair",
-      "Flooring repair or replacement",
-      "Upholstery repair or reupholstering",
-      "Appliance repair or replacement (e.g., refrigerators, microwaves)"
-    ]
+    description: "Cabinetry, flooring, and appliance repair.",
+    items: ["Flooring replacement", "Appliance repair", "Upholstery fixing"]
   },
   {
-    title: "Slide-Out Repairs",
+    title: "Slide-Out Mechanisms",
     icon: Maximize2,
-    items: [
-      "Slide-out motor and mechanism repair",
-      "Seal replacement for slide-outs",
-      "Structural repairs and reinforcement"
-    ]
+    description: "Motor repair and seal replacements.",
+    items: ["Motor mechanism repair", "Seal replacement", "Structural reinforcement"]
   },
   {
-    title: "Suspension Repairs",
+    title: "Suspension & Brakes",
     icon: Activity,
-    items: [
-      "Suspension system inspection and repair",
-      "Brake inspection and repair"
-    ]
+    description: "Ensuring a smooth and safe ride.",
+    items: ["Suspension inspection", "Brake pad replacement", "Rotor resurfacing"]
   },
   {
-    title: "Tire and Wheel Services",
+    title: "Tire Services",
     icon: CircleDashed,
-    items: [
-      "Tire inspection and replacement",
-      "Wheel alignment and balancing",
-      "Tire pressure monitoring system (TPMS) installation"
-    ]
+    description: "Tire inspection, balancing, and TPMS.",
+    items: ["Tire replacement", "Wheel alignment", "TPMS setup"]
   },
   {
-    title: "Safety Inspections and Upgrades",
+    title: "Safety Inspections",
     icon: ShieldCheck,
-    items: [
-      "Comprehensive RV safety inspections",
-      "Fire extinguisher inspection and replacement",
-      "Smoke and carbon monoxide detector installation",
-      "Backup camera and sensor installation"
-    ]
+    description: "Comprehensive safety audits.",
+    items: ["Fire extinguisher checks", "Detector installation", "Camera setups"]
   },
   {
-    title: "Preventive Maintenance Packages",
+    title: "Preventive Care",
     icon: CalendarCheck,
-    items: [
-      "Routine inspection and maintenance plans",
-      "Winterization and de-winterization services",
-      "Pre-trip inspection services"
-    ]
+    description: "Routine maintenance and seasonal prep.",
+    items: ["Routine plans", "Winterization", "Pre-trip inspections"]
   },
   {
-    title: "Tank Cleaning (Black/Gray)",
+    title: "Sanitation Services",
     icon: Trash2,
-    items: [
-      "Black and gray water tank cleaning",
-      "Tank flush and sanitization",
-      "Clog removal and odor control",
-      "Inspection for leaks and blockages"
-    ]
+    description: "Black and gray tank cleaning.",
+    items: ["Tank flushing", "Odor control", "Leak inspection"]
   }
 ];
 
-const ServiceAccordion: React.FC<{ service: typeof services[0], index: number }> = ({ service, index }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const ServiceCard: React.FC<{ service: typeof services[0], index: number }> = ({ service, index }) => {
   const Icon = service.icon;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
-      className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="glass-card rounded-2xl p-6 group relative overflow-hidden h-full flex flex-col"
     >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-slate-50 transition-colors"
-      >
-        <div className="flex items-center gap-4">
-          <div className="p-2 bg-sky-100 text-sky-700 rounded-lg">
-            <Icon className="w-6 h-6" />
-          </div>
-          <h3 className="font-semibold text-slate-900 text-lg">{service.title}</h3>
+      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110">
+        <Icon className="w-24 h-24 text-sky-400" />
+      </div>
+
+      <div className="relative z-10 flex-col flex h-full">
+        <div className="w-14 h-14 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-6 text-sky-400 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(14,165,233,0.4)] transition-all duration-300">
+          <Icon className="w-7 h-7" />
         </div>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ChevronDown className="w-5 h-5 text-slate-500" />
-        </motion.div>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="p-5 pt-0 border-t border-slate-100 bg-slate-50/50">
-              <ul className="space-y-3 mt-4">
-                {service.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-slate-600">
-                    <CheckCircle2 className="w-5 h-5 text-sky-500 shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+        <h3 className="text-xl font-bold text-white mb-2 font-display">{service.title}</h3>
+        <p className="text-slate-400 mb-6 text-sm">{service.description}</p>
+
+        <ul className="space-y-2 mt-auto">
+          {service.items.map((item, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+              <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5 opacity-70" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </motion.div>
   );
 }
 
+const BackgroundOrbs = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="absolute top-1/4 -left-1/4 w-[500px] h-[500px] bg-sky-600/20 rounded-full blur-[120px] mix-blend-screen animate-float"></div>
+    <div className="absolute top-1/3 -right-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[150px] mix-blend-screen animate-float-delayed"></div>
+    <div className="absolute bottom-[-10%] left-1/3 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px] mix-blend-screen animate-float"></div>
+  </div>
+);
+
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollTo = (id: string) => {
     setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 80; // Height of navbar
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
+
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-sky-200 selection:text-sky-900">
+    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-sky-500/30 selection:text-sky-200">
+
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50' : 'py-5 bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo Placeholder */}
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-              <div className="w-10 h-10 bg-sky-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-sky-600/20">
-                <Wrench className="w-6 h-6" />
+          <div className="flex justify-between items-center">
+
+            {/* Logo */}
+            <div
+              className="flex items-center gap-3 cursor-pointer group"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              <div className="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-[0_0_15px_rgba(14,165,233,0.5)] group-hover:shadow-[0_0_25px_rgba(14,165,233,0.8)] transition-all duration-300">
+                <Settings className="w-6 h-6 animate-[spin_10s_linear_infinite]" />
               </div>
               <div>
-                <span className="font-bold text-2xl tracking-tight text-slate-900 block leading-none">CIRVS</span>
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mt-1">Certified Integrity RV Service</span>
+                <span className="font-bold text-2xl tracking-tight text-white block leading-none font-display text-glow">CIRVS</span>
+                <span className="text-[10px] font-semibold text-sky-400 uppercase tracking-widest block mt-1">Certified RV Service</span>
               </div>
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollTo('services')} className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Services</button>
-              <button onClick={() => scrollTo('about')} className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">About</button>
-              <button onClick={() => scrollTo('contact')} className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Contact</button>
-              <button onClick={() => scrollTo('contact')} className="bg-sky-600 hover:bg-sky-700 text-white px-5 py-2.5 rounded-full font-medium text-sm transition-all shadow-lg shadow-sky-600/20 hover:shadow-sky-600/40 flex items-center gap-2">
-                Fix My RV
-                <ArrowRight className="w-4 h-4" />
+            <div className="hidden md:flex items-center gap-8 glass px-8 py-3 rounded-full">
+              {['services', 'about', 'contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollTo(item)}
+                  className="text-sm font-medium text-slate-300 hover:text-white hover:text-glow transition-all capitalize"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+
+            <div className="hidden md:block">
+              <button
+                onClick={() => scrollTo('contact')}
+                className="relative overflow-hidden group bg-sky-500 hover:bg-sky-400 text-white px-6 py-3 rounded-full font-medium text-sm transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] flex items-center gap-2"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out rounded-full" />
+                <span className="relative z-10">Fix My RV</span>
+                <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
 
             {/* Mobile Menu Toggle */}
             <div className="md:hidden flex items-center">
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-600 p-2">
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-white p-2 z-[60] relative"
+                aria-label="Toggle menu"
+              >
+                <motion.div animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}>
+                  {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+                </motion.div>
               </button>
             </div>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white border-b border-slate-200 overflow-hidden"
-            >
-              <div className="px-4 pt-2 pb-6 space-y-1">
-                <button onClick={() => scrollTo('services')} className="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-lg">Services</button>
-                <button onClick={() => scrollTo('about')} className="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-lg">About</button>
-                <button onClick={() => scrollTo('contact')} className="block w-full text-left px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-lg">Contact</button>
-                <div className="pt-4 px-3">
-                  <button onClick={() => scrollTo('contact')} className="w-full bg-sky-600 text-white px-5 py-3 rounded-xl font-medium flex items-center justify-center gap-2">
-                    Fix My RV
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop" 
-            alt="RV on the road" 
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-slate-900/70 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-transparent"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-3xl flex flex-col justify-center items-center md:hidden"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-sky-200 backdrop-blur-sm border border-sky-400/30 text-sm font-medium mb-6">
-              <MapPin className="w-4 h-4" />
-              Expert RV Repairs Across Florida
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 leading-tight">
-              Your Journey,<br />
-              <span className="text-sky-400">Our Priority.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl leading-relaxed">
-              Certified Integrity RV Service keeps you on the road with confidence. From electrical to plumbing, we provide exceptional mobile RV repair and maintenance.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button onClick={() => scrollTo('contact')} className="bg-sky-600 hover:bg-sky-500 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
-                Schedule a Repair
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button onClick={() => scrollTo('services')} className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 px-8 py-4 rounded-full font-semibold text-lg transition-all flex items-center justify-center">
-                View Our Services
-              </button>
+            <BackgroundOrbs />
+            <div className="relative z-10 flex flex-col items-center gap-8 w-full px-6">
+              {[
+                { id: 'services', label: 'Our Services' },
+                { id: 'about', label: 'About Us' },
+                { id: 'contact', label: 'Contact' }
+              ].map((item, i) => (
+                <motion.button
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: i * 0.1 }}
+                  onClick={() => scrollTo(item.id)}
+                  className="text-4xl font-display font-bold text-white hover:text-sky-400 transition-colors"
+                >
+                  {item.label}
+                </motion.button>
+              ))}
+
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.4 }}
+                onClick={() => scrollTo('contact')}
+                className="mt-8 w-full max-w-xs bg-sky-500 text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(14,165,233,0.4)] active:scale-95 transition-transform"
+              >
+                Fix My RV <ArrowRight className="w-5 h-5" />
+              </motion.button>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center pt-24 pb-20 justify-center overflow-hidden">
+        <BackgroundOrbs />
+
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-80 mix-blend-luminosity">
+          <img
+            src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop"
+            alt="RV on the road"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-transparent"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+            {/* Center the hero content since the right side is removed */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-3xl mx-auto text-center col-span-1 lg:col-span-2 flex flex-col items-center relative"
+            >
+              {/* Radial gradient background behind text to ensure readability */}
+              <div className="absolute inset-0 bg-slate-950/40 blur-3xl -z-10 rounded-full scale-150"></div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-sky-500/30 text-sky-100 text-sm font-medium mb-8 shadow-[0_0_20px_rgba(14,165,233,0.3)] bg-slate-900/40"
+              >
+                <MapPin className="w-4 h-4 text-sky-400" />
+                Premier Mobile RV Repair in Florida
+              </motion.div>
+
+              <h1 className="text-6xl md:text-8xl font-black font-display text-white tracking-tight mb-6 leading-[1.1] drop-shadow-2xl">
+                More Miles,<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
+                  Less Worries.
+                </span>
+              </h1>
+
+              <p className="text-xl text-slate-100 mb-10 max-w-xl leading-relaxed font-medium mx-auto drop-shadow-lg">
+                Professional, certified, and fully mobile RV repair services brought directly to your location. We fix it right, so you can explore further.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-5 justify-center w-full">
+                <button
+                  onClick={() => scrollTo('contact')}
+                  className="bg-white text-slate-900 hover:bg-sky-50 px-8 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center gap-3 focus:ring-4 focus:ring-sky-500/50"
+                >
+                  Schedule Service
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                </button>
+              </div>
+
+              <div className="mt-12 flex items-center gap-4 text-sm text-slate-500 font-medium justify-center">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center">
+                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    </div>
+                  ))}
+                </div>
+                <span>Trusted by hundreds of RV owners</span>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-base font-semibold text-sky-600 tracking-wide uppercase">What We Do</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-              Comprehensive RV Services
-            </p>
-            <p className="mt-4 max-w-2xl text-xl text-slate-500 mx-auto">
-              We offer a full range of repair and maintenance services to ensure your RV is always ready for the next adventure.
+      <section id="services" className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-block mb-4"
+            >
+              <span className="bg-sky-500/10 text-sky-400 font-semibold px-4 py-2 rounded-full border border-sky-500/20 text-sm tracking-widest uppercase">Expertise</span>
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-black font-display text-white mb-6">
+              Comprehensive RV Solutions
+            </h2>
+            <p className="text-xl text-slate-400 font-light">
+              From mechanical repairs to luxury upgrades, we handle every aspect of your RV's maintenance with precision.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
-              <ServiceAccordion key={index} service={service} index={index} />
+              <ServiceCard key={index} service={service} index={index} />
             ))}
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-            <motion.div 
+      <section id="about" className="py-32 relative bg-slate-900 border-y border-white/5">
+        <BackgroundOrbs />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="mb-12 lg:mb-0 relative"
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative order-2 lg:order-1"
             >
-              <div className="aspect-w-3 aspect-h-4 rounded-2xl overflow-hidden shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=2069&auto=format&fit=crop" 
-                  alt="RV Technician working" 
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-white/10 shadow-2xl p-2 z-10">
+                <img
+                  src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=2069&auto=format&fit=crop"
+                  alt="David Griffin, RV Technician"
+                  className="w-full h-full object-cover rounded-2xl filter grayscale-[20%] contrast-125"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent rounded-2xl"></div>
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-sky-600 text-white p-8 rounded-2xl shadow-xl hidden md:block max-w-xs">
-                <p className="text-2xl font-bold mb-1">30+ Years</p>
-                <p className="text-sky-100 text-sm">Experience in heavy duty truck & automotive maintenance</p>
+
+              {/* Decorative behind image */}
+              <div className="absolute top-10 -left-10 w-full h-full border-2 border-sky-500/20 rounded-3xl z-0 transform -rotate-3"></div>
+
+              <div className="absolute -bottom-8 -right-8 glass-card border-white/20 p-6 rounded-2xl shadow-2xl z-20 hidden md:block backdrop-blur-xl">
+                <p className="text-4xl font-black text-white font-display mb-1">30<span className="text-sky-400">+</span></p>
+                <p className="text-slate-300 font-medium text-sm">Years Experience</p>
               </div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="order-1 lg:order-2"
             >
-              <h2 className="text-base font-semibold text-sky-600 tracking-wide uppercase">The Team</h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl mb-6">
+              <span className="text-sky-400 font-semibold tracking-widest uppercase text-sm">The Expert</span>
+              <h2 className="text-4xl md:text-6xl font-black font-display text-white mt-4 mb-8">
                 Meet David Griffin
-              </p>
-              
-              <div className="prose prose-lg text-slate-600">
+              </h2>
+
+              <div className="space-y-6 text-lg text-slate-300 font-light leading-relaxed">
                 <p>
-                  David Griffin, owner and operator of Certified Integrity RV Service LLC, is a graduate of the <strong>National RV Training Academy</strong> and a <strong>Certified RV Technician</strong>.
-                </p>
-                <p>
-                  David has been trained in RV Air conditioning, furnaces, water heaters, refrigerators, plumbing, and exterior components. He has been self-employed for over 20 years in the transportation business and brings over 30 years of experience in heavy-duty truck and automotive maintenance and repairs.
+                  As the owner and operator of CIRVS, I bring a commitment to excellence forged through the <strong className="text-white font-medium">National RV Training Academy</strong> as a <strong className="text-white font-medium">Certified RV Technician</strong>.
                 </p>
                 <p>
-                  Specializing in preventative maintenance, David keeps your investment in top working condition. He has a strong work ethic, attention to detail, and is highly customer-service oriented. If there is a job beyond his ability, he will search to find you a technician who can.
+                  Specializing in advanced systems—from climate control and plumbing to complex electrical arrays—I combine specialized RV training with over three decades of heavy-duty transportation mechanic experience.
                 </p>
-                <p className="font-medium text-slate-900 italic mt-6">
-                  "Thank you for taking the time to read my bio. I look forward to providing you an exceptional service experience."
-                </p>
+
+                <blockquote className="border-l-4 border-sky-500 pl-6 py-2 my-8">
+                  <p className="text-xl text-white italic font-display">
+                    "My goal isn't just to fix your RV; it's to ensure your peace of mind on the open road. I treat every rig as if it were my own family's."
+                  </p>
+                </blockquote>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 border border-slate-200">
-                  <ShieldCheck className="w-5 h-5 text-sky-600" />
-                  Certified RV Technician
+              <div className="mt-10 flex flex-wrap gap-4">
+                <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                  <ShieldCheck className="w-5 h-5 text-sky-400" />
+                  <span className="font-semibold text-sm text-white uppercase tracking-wider">Certified Tech</span>
                 </div>
-                <div className="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 border border-slate-200">
-                  <Wrench className="w-5 h-5 text-sky-600" />
-                  NRVTA Graduate
+                <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                  <Wrench className="w-5 h-5 text-sky-400" />
+                  <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
                 </div>
               </div>
             </motion.div>
@@ -370,98 +446,112 @@ export default function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-slate-900 text-white relative overflow-hidden">
-        {/* Abstract background shapes */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-sky-600/20 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-indigo-600/20 blur-3xl"></div>
+      <section id="contact" className="py-32 relative overflow-hidden">
+        <BackgroundOrbs />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16">
-            <div>
-              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl mb-6">
-                Ready for your next adventure?
-              </h2>
-              <p className="text-lg text-slate-300 mb-8 max-w-lg">
-                At Certified Integrity RV Service LLC (CIRVS), we're dedicated to keeping you on the road with confidence. Whether you have a question, need to schedule a repair, or want to discuss a custom upgrade, we're here to help.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0 border border-white/10">
-                    <Phone className="w-6 h-6 text-sky-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-400 font-medium">Call or Text Us</p>
-                    <a href="tel:239-297-3899" className="text-xl font-semibold hover:text-sky-400 transition-colors">239-297-3899</a>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center shrink-0 border border-white/10">
-                    <Mail className="w-6 h-6 text-sky-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-400 font-medium">Email Us</p>
-                    <a href="mailto:David.cirvs@outlook.com" className="text-xl font-semibold hover:text-sky-400 transition-colors">David.cirvs@outlook.com</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-            <div className="bg-white rounded-2xl p-8 shadow-2xl text-slate-900">
-              <h3 className="text-2xl font-bold mb-6">Send us a message</h3>
-              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="first-name" className="block text-sm font-medium text-slate-700 mb-1">First name</label>
-                    <input type="text" id="first-name" className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all" placeholder="John" />
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-5xl lg:text-7xl font-black font-display text-white mb-6 leading-tight">
+                Let's Get You <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">Back Out There.</span>
+              </h2>
+              <p className="text-xl text-slate-400 mb-12 max-w-md font-light">
+                Whether it's an emergency repair or a planned upgrade, we're ready to deploy to your location.
+              </p>
+
+              <div className="space-y-8">
+                <a href="tel:239-297-3899" className="group flex items-center gap-6 p-4 rounded-2xl hover:bg-white/5 transition-colors -ml-4">
+                  <div className="w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-white transition-all text-sky-400">
+                    <Phone className="w-7 h-7" />
                   </div>
                   <div>
-                    <label htmlFor="last-name" className="block text-sm font-medium text-slate-700 mb-1">Last name</label>
-                    <input type="text" id="last-name" className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all" placeholder="Doe" />
+                    <p className="text-sm tracking-widest uppercase text-slate-500 font-semibold mb-1">Call or Text</p>
+                    <p className="text-2xl font-bold text-white group-hover:text-sky-300 transition-colors tracking-wider">239-297-3899</p>
+                  </div>
+                </a>
+
+                <a href="mailto:David.cirvs@outlook.com" className="group flex items-center gap-6 p-4 rounded-2xl hover:bg-white/5 transition-colors -ml-4">
+                  <div className="w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-white transition-all text-sky-400">
+                    <Mail className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <p className="text-sm tracking-widest uppercase text-slate-500 font-semibold mb-1">Email Us</p>
+                    <p className="text-xl font-bold text-white group-hover:text-sky-300 transition-colors break-all">David.cirvs@outlook.com</p>
+                  </div>
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="glass border-white/10 rounded-3xl p-8 sm:p-10 shadow-2xl relative"
+            >
+              {/* Decorative border gradient */}
+              <div className="absolute inset-0 rounded-3xl border border-transparent bg-gradient-to-b from-sky-500/20 to-transparent pointer-events-none" style={{ maskImage: 'linear-gradient(to bottom, black, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, black, transparent)' }}></div>
+
+              <h3 className="text-3xl font-bold text-white font-display mb-8">Request Service</h3>
+
+              <form className="space-y-5 relative z-10" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">First Name</label>
+                    <input type="text" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="John" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Last Name</label>
+                    <input type="text" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="Doe" />
                   </div>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                  <input type="email" id="email" className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all" placeholder="john@example.com" />
+
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Email Address</label>
+                  <input type="email" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="john@example.com" />
                 </div>
-                <div>
-                  <label htmlFor="rv-details" className="block text-sm font-medium text-slate-700 mb-1">RV Make/Model & Year</label>
-                  <input type="text" id="rv-details" className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all" placeholder="e.g. 2020 Winnebago View" />
+
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">RV Details</label>
+                  <input type="text" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="Year, Make, Model (e.g., 2022 Airstream)" />
                 </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">How can we help?</label>
-                  <textarea id="message" rows={4} className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all resize-none" placeholder="Describe the issue or service needed..."></textarea>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Service Needed</label>
+                  <textarea rows={4} className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all resize-none" placeholder="Briefly describe the issue..."></textarea>
                 </div>
-                <button type="submit" className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-md">
-                  Send Message
+
+                <button type="submit" className="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold text-lg py-4 px-6 rounded-xl transition-all hover:shadow-[0_0_20px_rgba(14,165,233,0.4)] active:scale-[0.98] mt-4">
+                  Send Request
                 </button>
-                <p className="text-xs text-slate-500 text-center mt-4">
-                  This form is for demonstration. Please use the email or phone number to contact us directly.
-                </p>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 py-12 border-t border-slate-800">
+      <footer className="bg-slate-950 py-12 border-t border-white/10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-sky-600 rounded flex items-center justify-center text-white">
-              <Wrench className="w-4 h-4" />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center text-white">
+              <Settings className="w-4 h-4" />
             </div>
-            <span className="font-bold text-xl tracking-tight text-white">CIRVS</span>
+            <span className="font-bold text-xl tracking-tight text-white font-display">CIRVS</span>
           </div>
-          
-          <p className="text-slate-400 text-sm text-center md:text-left">
+
+          <p className="text-slate-500 text-sm font-medium">
             &copy; {new Date().getFullYear()} Certified Integrity RV Service LLC. All rights reserved.
           </p>
-          
-          <div className="flex gap-6">
-            <a href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Privacy Policy</a>
-            <a href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Terms of Service</a>
+
+          <div className="flex gap-8">
+            <a href="#" className="text-slate-500 hover:text-sky-400 transition-colors text-sm font-medium uppercase tracking-wider">Privacy</a>
+            <a href="#" className="text-slate-500 hover:text-sky-400 transition-colors text-sm font-medium uppercase tracking-wider">Terms</a>
           </div>
         </div>
       </footer>
