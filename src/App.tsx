@@ -274,7 +274,7 @@ export default function App() {
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-80 mix-blend-luminosity">
           <img
-            src={getImageUrl('hero-bg.jpg')}
+            src={getImageUrl('hero-bg.jpeg')}
             alt="RV on the road"
             className="w-full h-full object-cover"
           />
@@ -403,7 +403,7 @@ export default function App() {
             >
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-white/10 shadow-2xl p-2 z-10">
                 <img
-                  src={getImageUrl('david-griffin.jpg')}
+                  src={getImageUrl('david-griffin.jpeg')}
                   alt="David Griffin, RV Technician"
                   className="w-full h-full object-cover rounded-2xl filter grayscale-[20%] contrast-125"
                 />
