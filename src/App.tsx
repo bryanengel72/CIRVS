@@ -78,7 +78,14 @@ const services = [
   }
 ];
 
-const ServiceCard: React.FC<{ service: typeof services[0], index: number }> = ({ service, index }) => {
+interface ServiceCardProps {
+  service: typeof services[0];
+  index: number;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isActive, onClick }) => {
   const Icon = service.icon;
 
   return (
@@ -87,14 +94,21 @@ const ServiceCard: React.FC<{ service: typeof services[0], index: number }> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-white border border-slate-100 shadow-xl rounded-2xl p-6 group relative overflow-hidden h-full flex flex-col hover:shadow-2xl transition-all"
+      onClick={onClick}
+      className={`bg-white shadow-xl rounded-2xl p-6 group relative overflow-hidden h-full flex flex-col hover:shadow-2xl transition-all cursor-pointer ${isActive
+        ? 'border-2 border-sky-400 shadow-[0_0_30px_rgba(14,165,233,0.4)] scale-[1.02]'
+        : 'border border-slate-100 hover:-translate-y-1'
+        }`}
     >
       <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-110">
         <Icon className="w-24 h-24 text-sky-400" />
       </div>
 
       <div className="relative z-10 flex-col flex h-full">
-        <div className="w-14 h-14 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-6 text-sky-400 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(14,165,233,0.4)] transition-all duration-300">
+        <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 ${isActive
+          ? 'bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.5)]'
+          : 'bg-sky-500/10 border border-sky-500/20 text-sky-400 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(14,165,233,0.4)]'
+          }`}>
           <Icon className="w-7 h-7" />
         </div>
 
@@ -125,6 +139,7 @@ const BackgroundOrbs = () => (
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -380,7 +395,13 @@ export default function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
-              <ServiceCard key={index} service={service} index={index} />
+              <ServiceCard
+                key={index}
+                service={service}
+                index={index}
+                isActive={activeServiceCard === index}
+                onClick={() => setActiveServiceCard(activeServiceCard === index ? null : index)}
+              />
             ))}
           </div>
         </div>
