@@ -173,13 +173,11 @@ export default function App() {
               className="flex items-center gap-3 cursor-pointer group"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
-              <div className="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-[0_0_15px_rgba(14,165,233,0.5)] group-hover:shadow-[0_0_25px_rgba(14,165,233,0.8)] transition-all duration-300">
-                <Settings className="w-6 h-6 animate-[spin_10s_linear_infinite]" />
-              </div>
-              <div>
-                <span className="font-bold text-2xl tracking-tight text-white block leading-none font-display text-glow">CIRVS</span>
-                <span className="text-[10px] font-semibold text-sky-400 uppercase tracking-widest block mt-1">Certified RV Service</span>
-              </div>
+              <img
+                src={getImageUrl('hero-bg.jpeg')}
+                alt="CIRVS Logo"
+                className="h-10 w-auto object-contain"
+              />
             </div>
 
             {/* Desktop Menu */}
