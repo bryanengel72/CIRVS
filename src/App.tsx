@@ -439,30 +439,26 @@ export default function App() {
                 </blockquote>
               </div>
 
-              <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="mt-10 flex flex-col items-start justify-between gap-6">
                 <div className="flex flex-wrap gap-4">
-                  <div className="flex flex-col items-center sm:items-start gap-4">
-                    <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
-                      <ShieldCheck className="w-5 h-5 text-sky-400" />
-                      <span className="font-semibold text-sm text-white uppercase tracking-wider">Certified Tech</span>
-                    </div>
-                    <img
-                      src={getImageUrl('cirvs-cert.png')}
-                      alt="CIRVS Certification"
-                      className="h-24 md:h-32 w-auto object-contain"
-                    />
+                  <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                    <ShieldCheck className="w-5 h-5 text-sky-400" />
+                    <span className="font-semibold text-sm text-white uppercase tracking-wider">Certified Tech</span>
                   </div>
 
-                  <div>
-                    <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
-                      <Wrench className="w-5 h-5 text-sky-400" />
-                      <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
-                    </div>
+                  <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                    <Wrench className="w-5 h-5 text-sky-400" />
+                    <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
                   </div>
                 </div>
 
-                {/* RVTAA Logo */}
-                <div className="flex-shrink-0">
+                {/* Certification Logos */}
+                <div className="flex items-center gap-8 mt-2">
+                  <img
+                    src={getImageUrl('cirvs-cert.png')}
+                    alt="CIRVS Certification"
+                    className="h-24 md:h-32 w-auto object-contain"
+                  />
                   <img
                     src={getImageUrl('RVTAA%20logo@3x.png')}
                     alt="RVTAA Logo"
