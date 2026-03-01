@@ -439,14 +439,25 @@ export default function App() {
                 </blockquote>
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-4">
-                <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
-                  <ShieldCheck className="w-5 h-5 text-sky-400" />
-                  <span className="font-semibold text-sm text-white uppercase tracking-wider">Certified Tech</span>
+              <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                <div className="flex flex-wrap gap-4">
+                  <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                    <ShieldCheck className="w-5 h-5 text-sky-400" />
+                    <span className="font-semibold text-sm text-white uppercase tracking-wider">Certified Tech</span>
+                  </div>
+                  <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                    <Wrench className="w-5 h-5 text-sky-400" />
+                    <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
+                  </div>
                 </div>
-                <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
-                  <Wrench className="w-5 h-5 text-sky-400" />
-                  <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
+
+                {/* RVTAA Logo */}
+                <div className="flex-shrink-0">
+                  <img
+                    src={getImageUrl('RVTAA%20logo@3x.png')}
+                    alt="RVTAA Logo"
+                    className="h-20 md:h-24 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity drop-shadow-2xl"
+                  />
                 </div>
               </div>
             </motion.div>
