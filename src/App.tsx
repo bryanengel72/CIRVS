@@ -274,9 +274,10 @@ export default function App() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-white via-slate-950/40 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-[#1b3144]/80 via-transparent to-transparent"></div>
-          {/* Top gradient to blend with the navbar/logo seamlessly */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1b3144] via-[#1b3144]/50 to-transparent h-48"></div>
         </div>
+
+        {/* Top gradient to blend with the navbar/logo seamlessly */}
+        <div className="absolute top-0 left-0 right-0 z-0 h-48 bg-gradient-to-b from-[#1b3144] via-[#1b3144]/80 to-transparent pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
