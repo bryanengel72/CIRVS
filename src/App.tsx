@@ -161,10 +161,10 @@ export default function App() {
   }, [isMobileMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-[#1b3145] text-slate-200 selection:bg-sky-500/30 selection:text-sky-200">
+    <div className="min-h-screen bg-[#1b3144] text-slate-200 selection:bg-sky-500/30 selection:text-sky-200">
 
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-[#1b3145]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50' : 'py-5 bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-[#1b3144]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50' : 'py-5 bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
 
@@ -224,7 +224,7 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-[#1b3145]/95 backdrop-blur-3xl flex flex-col justify-center items-center md:hidden"
+            className="fixed inset-0 z-50 bg-[#1b3144]/95 backdrop-blur-3xl flex flex-col justify-center items-center md:hidden"
           >
             <BackgroundOrbs />
             <div className="relative z-10 flex flex-col items-center gap-8 w-full px-6">
@@ -273,7 +273,9 @@ export default function App() {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-white via-slate-950/40 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1b3144]/80 via-transparent to-transparent"></div>
+          {/* Top gradient to blend with the navbar/logo seamlessly */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1b3144] via-[#1b3144]/50 to-transparent h-48"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -287,7 +289,7 @@ export default function App() {
               className="max-w-3xl mx-auto text-center col-span-1 lg:col-span-2 flex flex-col items-center relative"
             >
               {/* Radial gradient background behind text to ensure readability */}
-              <div className="absolute inset-0 bg-[#1b3145]/40 blur-3xl -z-10 rounded-full scale-150"></div>
+              <div className="absolute inset-0 bg-[#1b3144]/40 blur-3xl -z-10 rounded-full scale-150"></div>
 
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -562,7 +564,7 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1b3145] py-12 border-t border-white/10 relative z-10">
+      <footer className="bg-[#1b3144] py-12 border-t border-white/10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center text-white">
