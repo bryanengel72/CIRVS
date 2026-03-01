@@ -547,6 +547,22 @@ export default function App() {
                     <p className="text-xl font-bold text-white group-hover:text-sky-300 transition-colors break-all">David.cirvs@outlook.com</p>
                   </div>
                 </a>
+
+                {/* Large Glowing Logo Anchor */}
+                <div className="pt-12 flex justify-center lg:justify-start">
+                  <div className="relative">
+                    {/* Inner intense glow */}
+                    <div className="absolute inset-0 bg-sky-400/20 blur-2xl rounded-full transform scale-110"></div>
+                    {/* Outer ambient glow */}
+                    <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full transform scale-150 translate-y-4"></div>
+                    <img
+                      src={getImageUrl('CIRVS_Logo.svg')}
+                      alt="CIRVS Large Logo"
+                      className="relative z-10 w-64 md:w-80 h-auto opacity-95 drop-shadow-[0_0_25px_rgba(14,165,233,0.5)] hover:scale-105 transition-transform duration-500 cursor-pointer"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    />
+                  </div>
+                </div>
               </div>
             </motion.div>
 
