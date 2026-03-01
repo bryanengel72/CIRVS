@@ -96,8 +96,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isActive, onC
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onClick={onClick}
       className={`relative rounded-2xl p-[2px] group overflow-hidden h-full cursor-pointer transition-all duration-300 ${isActive
-          ? 'shadow-[0_0_30px_rgba(14,165,233,0.4)] scale-[1.02]'
-          : 'hover:shadow-2xl hover:-translate-y-1'
+        ? 'shadow-[0_0_30px_rgba(14,165,233,0.4)] scale-[1.02]'
+        : 'hover:shadow-2xl hover:-translate-y-1'
         }`}
     >
       {/* Default Border Background */}
@@ -117,8 +117,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isActive, onC
 
         <div className="relative z-10 flex-col flex h-full">
           <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 ${isActive
-              ? 'bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.5)]'
-              : 'bg-sky-500/10 border border-sky-500/20 text-sky-400 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(14,165,233,0.4)]'
+            ? 'bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.5)]'
+            : 'bg-sky-500/10 border border-sky-500/20 text-sky-400 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(14,165,233,0.4)]'
             }`}>
             <Icon className="w-7 h-7" />
           </div>
@@ -601,10 +601,7 @@ export default function App() {
       <footer className="bg-[#1b3144] py-12 border-t border-white/10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center text-white">
-              <Settings className="w-4 h-4" />
-            </div>
-            <span className="font-bold text-xl tracking-tight text-white font-display">CIRVS</span>
+            <img src={getImageUrl('CIRVS_Logo.svg')} alt="CIRVS Logo" className="h-10 w-auto" />
           </div>
 
           <p className="text-slate-500 text-sm font-medium">
