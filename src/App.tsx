@@ -460,7 +460,7 @@ export default function App() {
                     className="h-24 md:h-32 w-auto object-contain"
                   />
                   <img
-                    src={getImageUrl('RVTAA%20logo@3x.png')}
+                    src={getImageUrl('RVTAA logo@3x.png')}
                     alt="RVTAA Logo"
                     className="h-20 md:h-24 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity drop-shadow-2xl"
                   />
