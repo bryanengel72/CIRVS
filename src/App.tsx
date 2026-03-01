@@ -95,38 +95,50 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, isActive, onC
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onClick={onClick}
-      className={`bg-white shadow-xl rounded-2xl p-6 group relative overflow-hidden h-full flex flex-col hover:shadow-2xl transition-all cursor-pointer ${isActive
-        ? 'border-2 border-sky-400 shadow-[0_0_30px_rgba(14,165,233,0.4)] scale-[1.02]'
-        : 'border border-slate-100 hover:-translate-y-1'
+      className={`relative rounded-2xl p-[2px] group overflow-hidden h-full cursor-pointer transition-all duration-300 ${isActive
+          ? 'shadow-[0_0_30px_rgba(14,165,233,0.4)] scale-[1.02]'
+          : 'hover:shadow-2xl hover:-translate-y-1'
         }`}
     >
-      <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-110">
-        <Icon className="w-24 h-24 text-sky-400" />
-      </div>
+      {/* Default Border Background */}
+      <div className="absolute inset-0 bg-slate-100 z-0 transition-colors duration-300"></div>
 
-      <div className="relative z-10 flex-col flex h-full">
-        <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 ${isActive
-          ? 'bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.5)]'
-          : 'bg-sky-500/10 border border-sky-500/20 text-sky-400 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(14,165,233,0.4)]'
-          }`}>
-          <Icon className="w-7 h-7" />
+      {/* Rotating Glow */}
+      <div
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] aspect-square bg-[conic-gradient(transparent_0deg,transparent_180deg,#38bdf8_360deg)] animate-[spin_2s_linear_infinite] transition-opacity duration-300 z-0 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          }`}
+      />
+
+      {/* Inner Card */}
+      <div className="relative z-10 bg-white rounded-2xl p-6 h-full flex flex-col overflow-hidden">
+        <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 transform group-hover:scale-110">
+          <Icon className="w-24 h-24 text-sky-400" />
         </div>
 
-        <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">{service.title}</h3>
-        <p className="text-slate-600 mb-6 text-sm">{service.description}</p>
+        <div className="relative z-10 flex-col flex h-full">
+          <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 ${isActive
+              ? 'bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.5)]'
+              : 'bg-sky-500/10 border border-sky-500/20 text-sky-400 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(14,165,233,0.4)]'
+            }`}>
+            <Icon className="w-7 h-7" />
+          </div>
 
-        <ul className="space-y-2 mt-auto">
-          {service.items.map((item, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-              <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5 opacity-70" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+          <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">{service.title}</h3>
+          <p className="text-slate-600 mb-6 text-sm">{service.description}</p>
+
+          <ul className="space-y-2 mt-auto">
+            {service.items.map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+                <CheckCircle2 className="w-4 h-4 text-sky-500 shrink-0 mt-0.5 opacity-70" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </motion.div>
   );
-}
+};
 
 const BackgroundOrbs = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
