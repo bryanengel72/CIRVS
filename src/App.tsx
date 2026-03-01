@@ -441,13 +441,23 @@ export default function App() {
 
               <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 <div className="flex flex-wrap gap-4">
-                  <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
-                    <ShieldCheck className="w-5 h-5 text-sky-400" />
-                    <span className="font-semibold text-sm text-white uppercase tracking-wider">Certified Tech</span>
+                  <div className="flex flex-col items-center sm:items-start gap-4">
+                    <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                      <ShieldCheck className="w-5 h-5 text-sky-400" />
+                      <span className="font-semibold text-sm text-white uppercase tracking-wider">Certified Tech</span>
+                    </div>
+                    <img
+                      src={getImageUrl('cirvs-cert.png')}
+                      alt="CIRVS Certification"
+                      className="h-24 md:h-32 w-auto object-contain"
+                    />
                   </div>
-                  <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
-                    <Wrench className="w-5 h-5 text-sky-400" />
-                    <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
+
+                  <div>
+                    <div className="glass px-5 py-3 rounded-xl flex items-center gap-3 border-white/10">
+                      <Wrench className="w-5 h-5 text-sky-400" />
+                      <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
+                    </div>
                   </div>
                 </div>
 
