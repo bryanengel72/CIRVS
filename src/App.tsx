@@ -173,11 +173,13 @@ export default function App() {
               className="flex items-center gap-3 cursor-pointer group"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
-              <img
-                src={getImageUrl('hero-bg.jpeg')}
-                alt="CIRVS Logo"
-                className="h-10 w-auto object-contain"
-              />
+              <div className="w-10 h-10 bg-sky-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-[0_0_15px_rgba(14,165,233,0.5)] group-hover:shadow-[0_0_25px_rgba(14,165,233,0.8)] transition-all duration-300">
+                <Settings className="w-6 h-6 animate-[spin_10s_linear_infinite]" />
+              </div>
+              <div>
+                <span className="font-bold text-2xl tracking-tight text-white block leading-none font-display text-glow">CIRVS</span>
+                <span className="text-[10px] font-semibold text-sky-400 uppercase tracking-widest block mt-1">Certified RV Service</span>
+              </div>
             </div>
 
             {/* Desktop Menu */}
@@ -272,7 +274,7 @@ export default function App() {
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-80 mix-blend-luminosity">
           <img
-            src={getImageUrl('hero-bg.jpeg')}
+            src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop"
             alt="RV on the road"
             className="w-full h-full object-cover"
           />
