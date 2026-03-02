@@ -520,8 +520,7 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent rounded-2xl"></div>
               </div>
 
-              {/* Decorative behind image */}
-              <div className="absolute top-10 -left-10 w-full h-full border-2 border-sky-500/20 rounded-3xl z-0 transform -rotate-3"></div>
+
 
               <div className="absolute -bottom-8 -right-8 glass-card border-white/20 p-6 rounded-2xl shadow-2xl z-20 hidden md:block backdrop-blur-xl">
                 <p className="text-4xl font-black text-white font-display mb-1">30<span className="text-sky-400">+</span></p>
