@@ -569,26 +569,29 @@ export default function App() {
                     <span className="font-semibold text-sm text-white uppercase tracking-wider">NRVTA Grad</span>
                   </div>
                 </div>
-
-                {/* Certification Logos */}
-                <div className="flex items-center gap-8 mt-2">
-                  <motion.img
-                    animate={{ y: [0, -5, 0], scale: [1, 1.02, 1] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    src={cirvsCert}
-                    alt="CIRVS Certification"
-                    className="h-24 md:h-32 w-auto object-contain drop-shadow-[0_0_15px_rgba(56,189,248,0.2)]"
-                  />
-                  <motion.img
-                    animate={{ y: [0, 5, 0], scale: [1, 1.02, 1], rotate: [-1, 1, -1] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    src={rvtaaLogo}
-                    alt="RVTAA Logo"
-                    className="h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-                  />
-                </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section className="py-20 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-slate-500 font-semibold tracking-widest uppercase text-sm mb-10">
+            Certified &amp; Trained By
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-16">
+            <img
+              src={cirvsCert}
+              alt="CIRVS Certification"
+              className="h-28 md:h-36 w-auto object-contain"
+            />
+            <img
+              src={rvtaaLogo}
+              alt="RVTAA Logo"
+              className="h-20 md:h-28 w-auto object-contain"
+            />
           </div>
         </div>
       </section>
