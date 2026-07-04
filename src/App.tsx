@@ -4,7 +4,7 @@ import {
   Wrench, Zap, Droplet, ThermometerSnowflake, Home,
   Sofa, Maximize2, Activity, CircleDashed, ShieldCheck,
   CalendarCheck, Trash2, Phone, Mail, Menu, X, ChevronDown,
-  ArrowRight, CheckCircle2, MapPin, Star, Settings
+  ArrowRight, CheckCircle2, MapPin, Settings
 } from 'lucide-react';
 
 import cirvsLogo from './assets/CIRVS_Logo.jpeg';
@@ -449,17 +449,6 @@ export default function App() {
                 >
                   <Phone className="w-5 h-5" /> Schedule Service
                 </MagneticButton>
-              </div>
-
-              <div className="mt-12 flex items-center gap-4 text-sm text-slate-100 font-medium justify-center drop-shadow-md">
-                <div className="flex gap-1 bg-slate-900/40 px-3 py-2 rounded-full border border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.2)]">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <div key={i} className="flex items-center justify-center">
-                      <Star className="w-5 h-5 text-yellow-500 fill-yellow-500 drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
-                    </div>
-                  ))}
-                </div>
-                <span>Trusted by hundreds of RV owners</span>
               </div>
             </motion.div>
 
