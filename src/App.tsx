@@ -7,7 +7,10 @@ import {
   ArrowRight, CheckCircle2, MapPin, Star, Settings
 } from 'lucide-react';
 
-import { getImageUrl } from './lib/supabase';
+import cirvsLogo from './assets/CIRVS_Logo.jpeg';
+import brookGriffinPhoto from './assets/Brook-Griffin.png';
+import rvtaaLogo from './assets/RVTAA-Logo.png';
+import cirvsCert from './assets/CIRVS-Cert.png';
 
 const services = [
   {
@@ -261,7 +264,7 @@ export default function App() {
               className="flex items-center gap-3 cursor-pointer group"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
-              <img src={getImageUrl('CIRVS_Logo.svg')} alt="CIRVS Logo" className="h-14 w-auto" />
+              <img src={cirvsLogo} alt="CIRVS Logo" className="h-14 w-auto" />
             </div>
 
             {/* Desktop Menu */}
@@ -513,8 +516,8 @@ export default function App() {
             >
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glass border-white/10 shadow-2xl p-2 z-10">
                 <img
-                  src={getImageUrl('david-griffin.jpeg')}
-                  alt="David Griffin, RV Technician"
+                  src={brookGriffinPhoto}
+                  alt="Brook Griffin, RV Technician"
                   className="w-full h-full object-cover rounded-2xl filter grayscale-[20%] contrast-125"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent rounded-2xl"></div>
@@ -536,7 +539,7 @@ export default function App() {
             >
               <span className="text-sky-400 font-semibold tracking-widest uppercase text-sm">The Expert</span>
               <h2 className="text-4xl md:text-6xl font-black font-display text-white mt-4 mb-8">
-                Meet David Griffin
+                Meet Brook Griffin
               </h2>
 
               <div className="space-y-6 text-lg text-slate-300 font-light leading-relaxed">
@@ -572,14 +575,14 @@ export default function App() {
                   <motion.img
                     animate={{ y: [0, -5, 0], scale: [1, 1.02, 1] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    src={getImageUrl('cirvs-cert.png')}
+                    src={cirvsCert}
                     alt="CIRVS Certification"
                     className="h-24 md:h-32 w-auto object-contain drop-shadow-[0_0_15px_rgba(56,189,248,0.2)]"
                   />
                   <motion.img
                     animate={{ y: [0, 5, 0], scale: [1, 1.02, 1], rotate: [-1, 1, -1] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    src={getImageUrl('RVTAA-Logo_White.png')}
+                    src={rvtaaLogo}
                     alt="RVTAA Logo"
                     className="h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                   />
@@ -639,7 +642,7 @@ export default function App() {
                     {/* Outer ambient glow */}
                     <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full transform scale-150 translate-y-4"></div>
                     <img
-                      src={getImageUrl('CIRVS_Logo.svg')}
+                      src={cirvsLogo}
                       alt="CIRVS Large Logo"
                       className="relative z-10 w-64 md:w-80 h-auto opacity-95 drop-shadow-[0_0_25px_rgba(14,165,233,0.5)] hover:scale-105 transition-transform duration-500 cursor-pointer"
                       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -700,7 +703,7 @@ export default function App() {
       <footer className="bg-[#1b3144] py-12 border-t border-white/10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
-            <img src={getImageUrl('CIRVS_Logo.svg')} alt="CIRVS Logo" className="h-10 w-auto" />
+            <img src={cirvsLogo} alt="CIRVS Logo" className="h-10 w-auto" />
           </div>
 
           <p className="text-slate-500 text-sm font-medium">
