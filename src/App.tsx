@@ -249,7 +249,7 @@ export default function App() {
   }, [isMobileMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-[#1b3144] text-slate-200 selection:bg-sky-500/30 selection:text-sky-200 relative overflow-hidden">
+    <div id="top" className="min-h-screen bg-[#1b3144] text-slate-200 selection:bg-sky-500/30 selection:text-sky-200 relative overflow-hidden">
 
       {/* Global Background Elements */}
       <BackgroundOrbs parallax={true} />
@@ -260,35 +260,38 @@ export default function App() {
           <div className="flex justify-between items-center">
 
             {/* Logo */}
-            <div
+            <a
+              href="#top"
               className="flex items-center gap-3 cursor-pointer group"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             >
-              <img src={cirvsLogo} alt="CIRVS Logo" className="h-14 w-auto" />
-            </div>
+              <img src={cirvsLogo} alt="CIRVS Logo" width={262} height={257} className="h-14 w-auto" />
+            </a>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-8 glass px-8 py-3 rounded-full">
               {['services', 'about', 'contact'].map((item) => (
-                <button
+                <a
                   key={item}
-                  onClick={() => scrollTo(item)}
+                  href={`#${item}`}
+                  onClick={(e) => { e.preventDefault(); scrollTo(item); }}
                   className="text-sm font-medium text-slate-300 hover:text-white hover:text-glow transition-all capitalize"
                 >
                   {item}
-                </button>
+                </a>
               ))}
             </div>
 
             <div className="hidden md:block">
-              <button
-                onClick={() => scrollTo('contact')}
+              <a
+                href="#contact"
+                onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
                 className="relative overflow-hidden group bg-sky-500 hover:bg-sky-400 text-white px-6 py-3 rounded-full font-medium text-sm transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] flex items-center gap-2"
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out rounded-full" />
                 <span className="relative z-10">Fix My RV</span>
                 <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </a>
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -324,34 +327,37 @@ export default function App() {
                 { id: 'about', label: 'About Us' },
                 { id: 'contact', label: 'Contact' }
               ].map((item, i) => (
-                <motion.button
+                <motion.a
                   key={item.id}
+                  href={`#${item.id}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ delay: i * 0.1 }}
-                  onClick={() => scrollTo(item.id)}
+                  onClick={(e) => { e.preventDefault(); scrollTo(item.id); }}
                   className="text-4xl font-display font-bold text-white hover:text-sky-400 transition-colors"
                 >
                   {item.label}
-                </motion.button>
+                </motion.a>
               ))}
 
-              <motion.button
+              <motion.a
+                href="#contact"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ delay: 0.4 }}
-                onClick={() => scrollTo('contact')}
+                onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
                 className="mt-8 w-full max-w-xs bg-sky-500 text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(14,165,233,0.4)] active:scale-95 transition-transform"
               >
                 Fix My RV <ArrowRight className="w-5 h-5" />
-              </motion.button>
+              </motion.a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
+      <main>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-24 pb-20 justify-center overflow-hidden">
         <BackgroundOrbs />
@@ -518,6 +524,9 @@ export default function App() {
                 <img
                   src={brookGriffinPhoto}
                   alt="Brook Griffin, RV Technician"
+                  width={1125}
+                  height={1313}
+                  loading="lazy"
                   className="w-full h-full object-cover rounded-2xl filter grayscale-[20%] contrast-125"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent rounded-2xl"></div>
@@ -584,12 +593,18 @@ export default function App() {
           <div className="flex flex-wrap items-center justify-center gap-16">
             <img
               src={cirvsCert}
-              alt="CIRVS Certification"
+              alt="CIRVS Certified RV Technician badge"
+              width={348}
+              height={348}
+              loading="lazy"
               className="h-28 md:h-36 w-auto object-contain"
             />
             <img
               src={rvtaaLogo}
-              alt="RVTAA Logo"
+              alt="RVTAA - RV Technician Association of America logo"
+              width={456}
+              height={138}
+              loading="lazy"
               className="h-20 md:h-28 w-auto object-contain"
             />
           </div>
@@ -639,7 +654,11 @@ export default function App() {
 
                 {/* Large Glowing Logo Anchor */}
                 <div className="pt-12 flex justify-center lg:justify-start">
-                  <div className="relative">
+                  <a
+                    href="#top"
+                    className="relative"
+                    onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  >
                     {/* Inner intense glow */}
                     <div className="absolute inset-0 bg-sky-400/20 blur-2xl rounded-full transform scale-110"></div>
                     {/* Outer ambient glow */}
@@ -647,10 +666,12 @@ export default function App() {
                     <img
                       src={cirvsLogo}
                       alt="CIRVS Large Logo"
+                      width={262}
+                      height={257}
+                      loading="lazy"
                       className="relative z-10 w-64 md:w-80 h-auto opacity-95 drop-shadow-[0_0_25px_rgba(14,165,233,0.5)] hover:scale-105 transition-transform duration-500 cursor-pointer"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     />
-                  </div>
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -669,28 +690,28 @@ export default function App() {
               <form className="space-y-5 relative z-10" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">First Name</label>
-                    <input type="text" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="John" />
+                    <label htmlFor="firstName" className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">First Name</label>
+                    <input id="firstName" name="firstName" type="text" autoComplete="given-name" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="John" />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Last Name</label>
-                    <input type="text" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="Doe" />
+                    <label htmlFor="lastName" className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Last Name</label>
+                    <input id="lastName" name="lastName" type="text" autoComplete="family-name" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="Doe" />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Email Address</label>
-                  <input type="email" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="john@example.com" />
+                  <label htmlFor="email" className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Email Address</label>
+                  <input id="email" name="email" type="email" autoComplete="email" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="john@example.com" />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">RV Details</label>
-                  <input type="text" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="Year, Make, Model (e.g., 2022 Airstream)" />
+                  <label htmlFor="rvDetails" className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">RV Details</label>
+                  <input id="rvDetails" name="rvDetails" type="text" className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="Year, Make, Model (e.g., 2022 Airstream)" />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Service Needed</label>
-                  <textarea rows={4} className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all resize-none" placeholder="Briefly describe the issue..."></textarea>
+                  <label htmlFor="serviceNeeded" className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-1">Service Needed</label>
+                  <textarea id="serviceNeeded" name="serviceNeeded" rows={4} className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all resize-none" placeholder="Briefly describe the issue..."></textarea>
                 </div>
 
                 <button type="submit" className="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold text-lg py-4 px-6 rounded-xl transition-all hover:shadow-[0_0_20px_rgba(14,165,233,0.4)] active:scale-[0.98] mt-4">
@@ -701,12 +722,13 @@ export default function App() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-[#1b3144] py-12 border-t border-white/10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
-            <img src={cirvsLogo} alt="CIRVS Logo" className="h-10 w-auto" />
+            <img src={cirvsLogo} alt="CIRVS Logo" width={262} height={257} loading="lazy" className="h-10 w-auto" />
           </div>
 
           <p className="text-slate-500 text-sm font-medium">
